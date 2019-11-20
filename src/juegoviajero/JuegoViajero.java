@@ -8,26 +8,25 @@ package juegoviajero;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Castealo
- */
 public class JuegoViajero {
 
-    /**
-     * @param args the command line arguments
-     */
+    private static int total = 0;
+
     public static void main(String[] args) {
-        ViajeroErrante ve = new ViajeroErrante();
-        ve.setNombre("Viajero");
-        
-        ve.start();
-        
-        try {
-            ve.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(JuegoViajero.class.getName()).log(Level.SEVERE, null, ex);
+        for (int i = 0; i <5000; i++) {
+            ViajeroErrante ve = new ViajeroErrante();
+            ve.setNombre("Viajero");
+
+            ve.start();
+
+            try {
+                ve.join();
+                total = total + ve.getIteraciones()-1;
+            } catch (InterruptedException ex) {
+                Logger.getLogger(JuegoViajero.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        System.out.println(total + "\n");
     }
-    
+
 }

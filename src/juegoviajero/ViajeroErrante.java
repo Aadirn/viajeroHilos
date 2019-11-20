@@ -46,6 +46,10 @@ public class ViajeroErrante extends Thread {
         }
 
     }
+    
+    public int getIteraciones(){
+        return iteraciones;
+    }
 
     private void movimiento(int mov) {
         switch (mov) {
