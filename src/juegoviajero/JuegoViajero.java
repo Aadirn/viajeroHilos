@@ -11,9 +11,11 @@ import java.util.logging.Logger;
 public class JuegoViajero {
 
     private static int total = 0;
+    private static final int repeticiones=100_000;
+    
 
     public static void main(String[] args) {
-        for (int i = 0; i <5000; i++) {
+        for (int i = 0; i <repeticiones; i++) {
             ViajeroErrante ve = new ViajeroErrante();
             ve.setNombre("Viajero");
 
@@ -21,11 +23,12 @@ public class JuegoViajero {
 
             try {
                 ve.join();
-                total = total + ve.getIteraciones()-1;
+                total = total + ve.getIteraciones();
             } catch (InterruptedException ex) {
                 Logger.getLogger(JuegoViajero.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        total=total/repeticiones;
         System.out.println(total + "\n");
     }
 

@@ -40,9 +40,9 @@ public class ViajeroErrante extends Thread {
         fil = posInicial;
         while (ejecutar) {
             dado = aleatorio();
-            System.out.println("El viajero está en la posicion: [" + fil + "],[" + col + "]\n");
-            movimiento(dado);
+            //System.out.println("El viajero está en la posicion: [" + fil + "],[" + col + "]\n");
             iteraciones++;
+            movimiento(dado);
         }
 
     }
@@ -56,11 +56,11 @@ public class ViajeroErrante extends Thread {
             case 0:
                 if (fil == 0 ){//&& mov == Movimiento.UP.ordinal()) {
                     if (fil == 0 && col == 3 ){//&& mov == Movimiento.UP.ordinal()) {
-                        System.out.println("Ha encontrado la salida!!\n");
-                        System.out.println("He hecho: " + iteraciones + " iteraciones\n");
+                        //System.out.println("Ha encontrado la salida!!\n");
+                        //System.out.println("He hecho: " + iteraciones + " iteraciones\n");
                         salir();
                     } else {
-                        System.out.println("Ha chocado con una pared hacia ARRIBA\n");
+                        //System.out.println("Ha chocado con una pared hacia ARRIBA\n");
                     }
                 } else {
                     fil = fil - 1;
@@ -68,21 +68,21 @@ public class ViajeroErrante extends Thread {
                 break;
             case 1:
                 if (col == 7 ){//&& mov == Movimiento.LEFT.ordinal()) {
-                    System.out.println("Ha chocado con una pared a la DERECHA\n");
+                    //System.out.println("Ha chocado con una pared a la DERECHA\n");
                 } else {
                     col = col + 1;
                 }
                 break;
             case 2:
                 if (fil == 7 ){//&& mov == Movimiento.DOWN.ordinal()) {
-                    System.out.println("Ha chocado con una pared hacia ABAJO\n");
+                    //System.out.println("Ha chocado con una pared hacia ABAJO\n");
                 } else {
                     fil = fil + 1;
                 }
                 break;
             case 3:
                 if (col == 0 ){//&& mov == Movimiento.RIGHT.ordinal()) {
-                    System.out.println("Ha chocado con una pared a la IZQUIERDA\n");
+                    //System.out.println("Ha chocado con una pared a la IZQUIERDA\n");
                 } else {
                     col = col - 1;
                 }
