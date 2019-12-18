@@ -1,43 +1,35 @@
 package juegoviajero;
 
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ViajeroErrante extends Thread {
 
-    private final int posInicial = 7;
-    //private int[][] tabla;
-    private final int viajero = 0;
+    private static final int POS_INICIAL = 0;
     private int col;
     private int fil;
     private int dado;
-    private static final int numCols = 8;
-    private static final int numFils = 8;
+    private int up=0;
+    private int down=0;
+    private int left=0;
+    private int right=0;
+    private int sleep=0;
     private boolean ejecutar = true;
     private Random rnd = new Random(System.currentTimeMillis());
     private int iteraciones = 0;
     private String nombre;
+    private long fin;
+    private long inicio;
 
-    private static ViajeroErrante instance;
-
-    public static ViajeroErrante getInstance() {
-        if (instance == null) {
-            instance = new ViajeroErrante();
-        }
-        return instance;
-    }
-
-    public void setNombre(String nombre) {
+    public ViajeroErrante(String nombre) {
         this.nombre = nombre;
     }
-
-    public enum Movimiento {
-        UP, LEFT, DOWN, RIGHT;
-    }
-
     @Override
     public void run() {
-        col = posInicial;
-        fil = posInicial;
+        inicio = System.currentTimeMillis();
+        col = POS_INICIAL;
+        fil = POS_INICIAL;
         while (ejecutar) {
             dado = aleatorio();
             //System.out.println("El viajero está en la posicion: [" + fil + "],[" + col + "]\n");
@@ -46,49 +38,57 @@ public class ViajeroErrante extends Thread {
         }
 
     }
-    
-    public int getIteraciones(){
-        return iteraciones;
-    }
 
     private void movimiento(int mov) {
-        switch (mov) {
-            case 0:
-                if (fil == 0 ){//&& mov == Movimiento.UP.ordinal()) {
-                    if (fil == 0 && col == 3 ){//&& mov == Movimiento.UP.ordinal()) {
-                        //System.out.println("Ha encontrado la salida!!\n");
-                        //System.out.println("He hecho: " + iteraciones + " iteraciones\n");
-                        salir();
-                    } else {
+        if (fil != 19 && col != 19) {
+            switch (mov) {
+                case 0:
+                    up++;
+                    if (fil == 0) {
                         //System.out.println("Ha chocado con una pared hacia ARRIBA\n");
+                    } else {
+                        fil = fil - 1;
                     }
-                } else {
-                    fil = fil - 1;
-                }
-                break;
-            case 1:
-                if (col == 7 ){//&& mov == Movimiento.LEFT.ordinal()) {
-                    //System.out.println("Ha chocado con una pared a la DERECHA\n");
-                } else {
-                    col = col + 1;
-                }
-                break;
-            case 2:
-                if (fil == 7 ){//&& mov == Movimiento.DOWN.ordinal()) {
-                    //System.out.println("Ha chocado con una pared hacia ABAJO\n");
-                } else {
-                    fil = fil + 1;
-                }
-                break;
-            case 3:
-                if (col == 0 ){//&& mov == Movimiento.RIGHT.ordinal()) {
-                    //System.out.println("Ha chocado con una pared a la IZQUIERDA\n");
-                } else {
-                    col = col - 1;
-                }
-                break;
-        }
+                    break;
+                case 1:
+                    right++;
+                    if (col == 19) {
+                        //System.out.println("Ha chocado con una pared a la DERECHA\n");
+                    } else {
+                        col = col + 1;
+                    }
+                    break;
+                case 2:
+                    down++;
+                    if (fil == 19) {
+                        //System.out.println("Ha chocado con una pared hacia ABAJO\n");
+                    } else {
+                        fil = fil + 1;
+                    }
+                    break;
+                case 3:
+                    left++;
+                    if (col == 0) {
+                        //System.out.println("Ha chocado con una pared a la IZQUIERDA\n");
+                    } else {
+                        col = col - 1;
+                    }
+                    break;
+                case 4:
+                    sleep++;
+                    try {
+                        //System.out.println("Me voy a dormir 10ms\n");
+                        sleep(10);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ViajeroErrante.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
+                    break;
+            }
+        } else {
+            fin = System.currentTimeMillis() - inicio;
+            salir();
+        }
     }
 
     private void salir() {
@@ -96,7 +96,33 @@ public class ViajeroErrante extends Thread {
     }
 
     private int aleatorio() {
-        return rnd.nextInt(3 - 0 + 1) + 0;
+        return rnd.nextInt(4 - 0 + 1) + 0;
+    }
+    
+    public int getIteraciones() {
+        return iteraciones;
+    }
+    
+    public int getUp() {
+        return up;
+    }
+    public int getDown() {
+        return down;
+    }
+    public int getLeft() {
+        return left;
+    }
+    public int getRight() {
+        return right;
+    }
+    public int getSleep() {
+        return sleep;
+    }
+    public long getTiempo(){
+        return fin;
+    }
+    public String getNombre(){
+        return nombre;
     }
 
 }
